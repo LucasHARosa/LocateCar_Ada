@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VeiculoMemoria  implements Repository<Veiculo>{
-    private static List<Veiculo> veiculos = new ArrayList<>();
+    private static final List<Veiculo> veiculos = new ArrayList<>();
     @Override
     public void add(Veiculo item) {
         veiculos.add(item);
@@ -18,8 +18,12 @@ public class VeiculoMemoria  implements Repository<Veiculo>{
     }
 
     @Override
-    public void update(Veiculo anterior, Veiculo novo) {
-
+    public void update(Veiculo update) {
+        for(Veiculo veiculo : veiculos){
+            if(veiculo.getPlaca().equals(update.getPlaca())){
+                veiculo.setDisponivel(!update.isDisponivel());
+            }
+        }
     }
 
     @Override

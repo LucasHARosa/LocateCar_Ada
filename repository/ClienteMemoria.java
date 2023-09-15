@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteMemoria implements Repository<Cliente>{
-    private static List<Cliente> clientes = new ArrayList<>();
+    private static final List<Cliente> clientes = new ArrayList<>();
 
     @Override
     public void add(Cliente item) {
@@ -19,7 +19,7 @@ public class ClienteMemoria implements Repository<Cliente>{
     }
 
     @Override
-    public void update(Cliente anterior, Cliente novo) {
+    public void update(Cliente update) {
         // Trocar o cliente anterior pelo novo
 
     }

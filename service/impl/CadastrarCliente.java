@@ -8,7 +8,7 @@ import service.api.Cadastrar;
 import utils.Input;
 
 public class CadastrarCliente implements Cadastrar {
-    public Repository<Cliente> clientes;
+    private Repository<Cliente> clientes;
     public CadastrarCliente(Repository<Cliente> clientes) {
         this.clientes = clientes;
     }

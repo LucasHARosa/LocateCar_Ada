@@ -1,18 +1,20 @@
 package service.impl;
 
+import model.Aluguel;
 import model.Cliente;
 import model.Veiculo;
 import repository.Repository;
 import service.api.Cadastrar;
 import service.api.ListaObjetos;
-import utils.Input;
 
 public class LocateCar {
     public Repository<Cliente> clientes;
     public Repository<Veiculo> veiculos;
-    public LocateCar(Repository<Cliente> clientes, Repository<Veiculo> veiculos) {
+    public Repository<Aluguel> alugueis;
+    public LocateCar(Repository<Cliente> clientes, Repository<Veiculo> veiculos, Repository<Aluguel> alugueis) {
         this.clientes = clientes;
         this.veiculos = veiculos;
+        this.alugueis = alugueis;
     }
 
     public boolean execute() {
@@ -26,13 +28,19 @@ public class LocateCar {
                 cadastrarCliente();
                 break;
             case 2:
-                System.out.println("Cadastrar veículo.");
+                cadastrarVeiculo();
                 break;
             case 3:
-                listarClientes();
+                alugarVeiculo();
                 break;
             case 4:
-                System.out.println("Transferir.");
+                listarClientes();
+                break;
+            case 5:
+                listarVeiculos();
+                break;
+            case 6:
+                listarAlugueis();
                 break;
             default:
                 MenuSeletor.tryAgain();
@@ -52,9 +60,25 @@ public class LocateCar {
         cadastrarVeiculo.cadastrar();
     }
 
+    public void alugarVeiculo() {
+        System.out.println();
+        Cadastrar alugarVeiculo = new CadastrarAluguel(alugueis,clientes, veiculos);
+        alugarVeiculo.cadastrar();
+    }
+
     public void listarClientes() {
-        ListaObjetos listaClientes = new SelecionarPessoa();
+        ListaObjetos<Cliente> listaClientes = new SelecionarPessoa();
         listaClientes.listar(clientes.getAll());
 
+    }
+
+    public void listarVeiculos() {
+        ListaObjetos<Veiculo> listaVeiculos = new SelecionarVeiculo();
+        listaVeiculos.listar(veiculos.getAll());
+    }
+
+    public void listarAlugueis() {
+        ListaObjetos<Aluguel> listaAlugueis = new SelecionarAluguel();
+        listaAlugueis.listar(alugueis.getAll());
     }
 }

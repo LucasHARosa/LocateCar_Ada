@@ -13,8 +13,10 @@ public class MenuSeletor {
         System.out.println("0 - Sair.");
         System.out.println("1 - Cadastrar cliente.");
         System.out.println("2 - Cadastrar veículo.");
-        System.out.println("3 - Listar clientes.");
-        System.out.println("4 - Listar veículos.");
+        System.out.println("3 - Alugar Veiculo.");
+        System.out.println("4 - Listar clientes.");
+        System.out.println("5 - Listar veículos.");
+        System.out.println("6 - Listar alugueis.");
         System.out.println();
 
         return Input.lerInt("Opção desejada: ");
