@@ -21,7 +21,12 @@ public class AluguelMemoria implements Repository<Aluguel>
 
     @Override
     public void update(Aluguel update) {
-
+        for(Aluguel aluguel : alugueis){
+            if(aluguel.getCliente().getDocumento().getValor().equals(update.getCliente().getDocumento().getValor())){
+                aluguel.setValores(update.getValores());
+                aluguel.setDataLocalSaida(update.getDataLocalSaida());
+            }
+        }
     }
 
     @Override

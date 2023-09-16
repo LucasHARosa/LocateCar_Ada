@@ -5,13 +5,13 @@ public class Aluguel {
     private Veiculo veiculo;
     private DataLocal dataLocalEntrada;
     private DataLocal dataLocalSaida;
-
     private Valor valores;
 
     public Aluguel(Cliente cliente, Veiculo veiculo, DataLocal dataLocalEntrada) {
         this.cliente = cliente;
         this.veiculo = veiculo;
         this.dataLocalEntrada = dataLocalEntrada;
+        this.valores = new Valor(0,0,0);
     }
 
     public Cliente getCliente() {

@@ -11,6 +11,10 @@ public class SelecionarAluguel implements ListaObjetos<Aluguel> {
     public Aluguel selecionar(List<Aluguel> lista) {
         listar(lista);
         int opcao = Input.lerInt("Digite o número correspondente ao aluguel: ");
+        if(opcao < 1 || opcao > lista.size()){
+            System.out.println("Opção inválida.");
+            return selecionar(lista);
+        }
         return lista.get(opcao-1);
     }
 

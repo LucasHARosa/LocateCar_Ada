@@ -28,23 +28,18 @@ public class CadastrarAluguel implements Cadastrar {
     @Override
     public void cadastrar() {
         if(!existemClientes()){
-            System.out.println("Não existem clientes cadastrados. Cadastre um cliente antes de alugar um veículo.");
+            System.out.println("Cadastre mais um cliente antes de alugar um veículo.");
             return;
         }
         if(!existemVeiculos()){
-            System.out.println("Não existem veículos cadastrados. Cadastre um veículo antes de alugar um veículo.");
+            System.out.println("Não existem veículos disponíveis");
             return;
         }
-        ListaObjetos<Cliente> listaClientes = new SelecionarPessoa();
-        Cliente cliente = listaClientes.selecionar(clientes.getAll());
+        Cliente cliente = selecionarCliente();
         Veiculo veiculo = selecionarVeiculo();
         LocalDateTime dataEntrada = InputDataLocal.lerDataHora("Data e hora de retirada do veiculo. Formato (10/02/2023 13:30): ");
         String local = Input.lerString("Local de retirada do veiculo: ");
         DataLocal dataLocal = new DataLocal(dataEntrada, local);
-        if(cadastroExiste(cliente.getDocumento().getValor())){
-            System.out.println("Cliente já possui aluguel em aberto. Por favor selecione outro cliente.");
-            return;
-        }
         veiculos.update(veiculo);
         alugueis.add(new Aluguel(cliente, veiculo, dataLocal));
         System.out.println("Aluguel cadastrado com sucesso.");
@@ -52,28 +47,62 @@ public class CadastrarAluguel implements Cadastrar {
 
     @Override
     public boolean cadastroExiste(String valor) {
-        if(alugueis.getAll().isEmpty() || alugueis == null){
-            return false;
+
+        for(Aluguel aluguel : alugueis.getAll()){
+            if(aluguel.getCliente().getDocumento().getValor().equals(valor)){
+                return true;
+            }
         }
-        return alugueis.getAll().stream().anyMatch(aluguel -> aluguel.getCliente().getDocumento().getValor().equals(valor));
+        return false;
     }
 
     public Veiculo selecionarVeiculo(){
         ListaObjetos<Veiculo> listaVeiculos = new SelecionarVeiculo();
         Veiculo veiculo = listaVeiculos.selecionar(veiculos.getAll());
-        if(veiculo.isDisponivel()){
+        if(!veiculo.isDisponivel()){
             System.out.println("Veículo já alugado. Por favor selecione outro veículo.");
             return selecionarVeiculo();
         }
         return veiculo;
     }
 
+    public Cliente selecionarCliente(){
+        ListaObjetos<Cliente> listaClientes = new SelecionarPessoa();
+        Cliente cliente = listaClientes.selecionar(clientes.getAll());
+        if(cadastroExiste(cliente.getDocumento().getValor())){
+            System.out.println("Cliente já possui aluguel em aberto. Por favor selecione outro cliente.");
+            selecionarCliente();
+        }
+        return cliente;
+    }
+
     public boolean existemClientes() {
-        return !clientes.getAll().isEmpty();
+        if(clientes.getAll().isEmpty()){
+            return false;
+        }
+        else{
+            for(Cliente cliente : clientes.getAll()){
+                if(!cadastroExiste(cliente.getDocumento().getValor())){
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public boolean existemVeiculos() {
-        return !veiculos.getAll().isEmpty();
+        if(veiculos.getAll().isEmpty()){
+            return false;
+        }
+        else{
+            for(Veiculo veiculo : veiculos.getAll()){
+                if(veiculo.isDisponivel()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

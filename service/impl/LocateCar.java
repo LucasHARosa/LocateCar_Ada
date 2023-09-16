@@ -34,12 +34,15 @@ public class LocateCar {
                 alugarVeiculo();
                 break;
             case 4:
-                listarClientes();
+                new Devolucao(alugueis).execute();
                 break;
             case 5:
-                listarVeiculos();
+                listarClientes();
                 break;
             case 6:
+                listarVeiculos();
+                break;
+            case 7:
                 listarAlugueis();
                 break;
             default:
